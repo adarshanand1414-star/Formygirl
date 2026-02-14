@@ -8,18 +8,16 @@
 body{
 margin:0;
 font-family:Arial, sans-serif;
-background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+background:#e88c8c;
 color:white;
-overflow:hidden;
 }
 
 .section{
 display:none;
 height:100vh;
-display:flex;
-flex-direction:column;
 justify-content:center;
 align-items:center;
+flex-direction:column;
 text-align:center;
 padding:20px;
 }
@@ -57,10 +55,8 @@ img{
 max-width:85%;
 max-height:60vh;
 border-radius:20px;
-box-shadow:0 0 20px rgba(0,0,0,0.3);
 margin:10px;
 }
-
 </style>
 </head>
 
@@ -70,14 +66,14 @@ margin:10px;
 <div class="section active" id="page1">
 <h1>Our Love Journey 💖</h1>
 <p>Every love story is beautiful, but ours is my favorite.</p>
-<button class="next" onclick="nextPage(2)">Start</button>
+<button id="startBtn" class="next">Start</button>
 </div>
 
 <!-- PAGE 2 -->
 <div class="section" id="page2">
 <h2>Where It All Started 💬</h2>
 <img src="chat.jpg">
-<button class="next" onclick="nextPage(3)">Next</button>
+<button id="toPage3" class="next">Next</button>
 </div>
 
 <!-- PAGE 3 -->
@@ -85,22 +81,17 @@ margin:10px;
 <h2>Our Beautiful Memories 📸</h2>
 <img id="slider" src="photo1.jpg">
 <br>
-<button onclick="prevPhoto()">⬅</button>
-<button onclick="nextPhoto()">➡</button>
+<button id="prev">⬅</button>
+<button id="next">➡</button>
 <br>
-<button class="next" onclick="nextPage(4)">Next</button>
+<button id="toPage4" class="next">Next</button>
 </div>
 
 <!-- PAGE 4 -->
 <div class="section" id="page4">
 <h2>My Confession ❤️</h2>
 <p>
-It started with a small conversation,<br>
-but somehow you became the reason behind my smiles.<br><br>
-If I had to choose one person every day,<br>
-it would always be you.<br><br>
-I want you not just for today,<br>
-but forever ❤️
+You became my smile, my peace, my everything ❤️
 </p>
 
 <audio controls>
@@ -108,14 +99,14 @@ but forever ❤️
 </audio>
 
 <br>
-<button class="next" onclick="nextPage(5)">Final Question</button>
+<button id="toPage5" class="next">Final Question</button>
 </div>
 
 <!-- PAGE 5 -->
 <div class="section" id="page5">
 <h2>Will You Be Mine Forever? 💍</h2>
-<button id="yesBtn" onclick="nextPage(6)">YES ❤️</button>
-<button id="noBtn" onmouseover="moveNo()">NO 😜</button>
+<button id="yesBtn">YES ❤️</button>
+<button id="noBtn">NO 😜</button>
 </div>
 
 <!-- PAGE 6 -->
@@ -126,15 +117,36 @@ but forever ❤️
 
 <script>
 
-function nextPage(num){
+function showPage(page){
 var sections=document.getElementsByClassName("section");
 for(var i=0;i<sections.length;i++){
 sections[i].classList.remove("active");
 }
-document.getElementById("page"+num).classList.add("active");
+document.getElementById(page).classList.add("active");
 }
 
-/* PHOTO SLIDER */
+/* Navigation */
+document.getElementById("startBtn").addEventListener("click", function(){
+showPage("page2");
+});
+
+document.getElementById("toPage3").addEventListener("click", function(){
+showPage("page3");
+});
+
+document.getElementById("toPage4").addEventListener("click", function(){
+showPage("page4");
+});
+
+document.getElementById("toPage5").addEventListener("click", function(){
+showPage("page5");
+});
+
+document.getElementById("yesBtn").addEventListener("click", function(){
+showPage("page6");
+});
+
+/* Photo Slider */
 let photos=[
 "photo1.jpg",
 "photo2.jpg",
@@ -144,25 +156,24 @@ let photos=[
 
 let index=0;
 
-function nextPhoto(){
+document.getElementById("next").addEventListener("click", function(){
 index=(index+1)%photos.length;
 document.getElementById("slider").src=photos[index];
-}
+});
 
-function prevPhoto(){
+document.getElementById("prev").addEventListener("click", function(){
 index=(index-1+photos.length)%photos.length;
 document.getElementById("slider").src=photos[index];
-}
+});
 
-/* NO BUTTON MOVE */
-function moveNo(){
-let btn=document.getElementById("noBtn");
-btn.style.position="absolute";
-btn.style.top=Math.random()*80+"%";
-btn.style.left=Math.random()*80+"%";
-}
+/* NO Button Move */
+document.getElementById("noBtn").addEventListener("mouseover", function(){
+this.style.position="absolute";
+this.style.top=Math.random()*80+"%";
+this.style.left=Math.random()*80+"%";
+});
 
 </script>
 
 </body>
-</html>
+  </html>
